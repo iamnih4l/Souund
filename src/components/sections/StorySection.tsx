@@ -1,7 +1,36 @@
 "use client";
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useEffect } from "react";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Points, PointMaterial } from "@react-three/drei";
+import * as random from "maath/random/dist/maath-random.esm";
+
+function ParticleField(props: any) {
+  const ref = useRef<any>(null);
+  const sphere = random.inSphere(new Float32Array(5000 * 3), { radius: 1.5 });
+
+  useFrame((state, delta) => {
+    if (ref.current) {
+      ref.current.rotation.x -= delta / 10;
+      ref.current.rotation.y -= delta / 15;
+    }
+  });
+
+  return (
+    <group rotation={[0, 0, Math.PI / 4]}>
+      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
+        <PointMaterial
+          transparent
+          color="#0ea5e9"
+          size={0.005}
+          sizeAttenuation={true}
+          depthWrite={false}
+        />
+      </Points>
+    </group>
+  );
+}
 
 export default function StorySection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -31,10 +60,8 @@ export default function StorySection() {
   }, []);
 
   // Z-Axis Camera Fly-through
-  // The camera moves forward from 0 to 4500px in depth as we scroll
   const cameraZ = useTransform(scrollYProgress, [0, 1], [0, 4500]);
 
-  // Opacities based on camera Z position (fade out as the camera passes through)
   const opacity1 = useTransform(cameraZ, [0, 800, 1200], [1, 1, 0]);
   const opacity2 = useTransform(cameraZ, [500, 1500, 2300, 2700], [0, 1, 1, 0]);
   const opacity3 = useTransform(cameraZ, [2000, 3000, 4000], [0, 1, 1]);
@@ -43,13 +70,19 @@ export default function StorySection() {
     <section 
       id="story" 
       ref={containerRef} 
-      className="relative h-[400vh] w-full bg-[#030303]"
+      className="relative h-[400vh] w-full bg-black"
     >
-      {/* Sticky Perspective Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden perspective-[1200px]">
         
-        {/* Background Atmosphere */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,rgba(0,0,0,1)_80%)]" />
+        {/* 3D Particle Background */}
+        <div className="absolute inset-0 z-0 opacity-40">
+          <Canvas camera={{ position: [0, 0, 1] }}>
+            <ParticleField />
+          </Canvas>
+        </div>
+
+        {/* Atmosphere */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,rgba(0,0,0,1)_80%)] z-0 pointer-events-none" />
 
         {/* 3D World Space */}
         <motion.div 
