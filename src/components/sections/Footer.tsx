@@ -42,7 +42,7 @@ export default function Footer() {
           <a href="#" className="w-10 h-10 rounded-full glass flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-colors">
             <FaLinkedin size={18} />
           </a>
-          <a href="mailto:hello@souund.com" className="w-10 h-10 rounded-full glass flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-colors">
+          <a href="mailto:SouundLabs@proton.me" className="w-10 h-10 rounded-full glass flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-colors">
             <Mail size={18} />
           </a>
         </div>

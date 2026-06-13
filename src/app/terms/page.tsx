@@ -71,7 +71,7 @@ export default function TermsOfService() {
               <section>
                 <h2 className="text-2xl font-semibold text-white mb-4">6. Contact Us</h2>
                 <p>
-                  If you have any questions about these Terms, please contact us at: <a href="mailto:legal@souund.com" className="text-electric-blue hover:underline">legal@souund.com</a>.
+                  If you have any questions about these Terms, please contact us at: <a href="mailto:SouundLabs@proton.me" className="text-electric-blue hover:underline">SouundLabs@proton.me</a>.
                 </p>
               </section>
             </div>

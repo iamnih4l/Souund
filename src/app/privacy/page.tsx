@@ -69,7 +69,7 @@ export default function PrivacyPolicy() {
               <section>
                 <h2 className="text-2xl font-semibold text-white mb-4">5. Contact Us</h2>
                 <p>
-                  If you have any questions about this privacy policy or our privacy practices, please contact us at: <a href="mailto:privacy@souund.com" className="text-electric-blue hover:underline">privacy@souund.com</a>.
+                  If you have any questions about this privacy policy or our privacy practices, please contact us at: <a href="mailto:SouundLabs@proton.me" className="text-electric-blue hover:underline">SouundLabs@proton.me</a>.
                 </p>
               </section>
             </div>
