@@ -19,6 +19,15 @@ export const metadata: Metadata = {
   title: "Souund | Creator Infrastructure for Sign-First Communication",
   description: "A premium AI company enabling sign-first creators to participate fully in the creator economy. Sign. Create. Be Heard.",
   keywords: ["Souund", "Sign Language", "AI", "Creator Economy", "Accessibility"],
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icon.png' },
+    ],
+  },
 };
 
 export default function RootLayout({
