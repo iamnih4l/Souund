@@ -10,49 +10,54 @@ export default function StorySection() {
     offset: ["start end", "end start"]
   });
 
-  const opacity1 = useTransform(scrollYProgress, [0.1, 0.3, 0.4, 0.5], [0, 1, 1, 0]);
-  const y1 = useTransform(scrollYProgress, [0.1, 0.3, 0.4, 0.5], [100, 0, 0, -100]);
+  // Scene 1: Fades in early, fades out completely before Scene 2
+  const opacity1 = useTransform(scrollYProgress, [0.05, 0.15, 0.25, 0.35], [0, 1, 1, 0]);
+  const y1 = useTransform(scrollYProgress, [0.05, 0.15, 0.25, 0.35], [100, 0, 0, -100]);
 
-  const opacity2 = useTransform(scrollYProgress, [0.4, 0.6, 0.7], [0, 1, 1]);
-  const y2 = useTransform(scrollYProgress, [0.4, 0.6], [100, 0]);
+  // Scene 2: Fades in after Scene 1 is gone, fades out before Scene 3
+  const opacity2 = useTransform(scrollYProgress, [0.4, 0.5, 0.6, 0.7], [0, 1, 1, 0]);
+  const y2 = useTransform(scrollYProgress, [0.4, 0.5, 0.6, 0.7], [100, 0, 0, -100]);
+
+  // Scene 3: Fades in at the end and stays
+  const opacity3 = useTransform(scrollYProgress, [0.75, 0.85, 0.95], [0, 1, 1]);
+  const y3 = useTransform(scrollYProgress, [0.75, 0.85], [100, 0]);
 
   return (
     <section 
       id="story" 
       ref={containerRef} 
-      className="relative min-h-[150vh] w-full bg-black py-32"
+      className="relative min-h-[300vh] w-full bg-black py-32"
     >
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center px-6 max-w-4xl mx-auto text-center">
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center px-6 max-w-5xl mx-auto text-center">
         
-        <motion.div style={{ opacity: opacity1, y: y1 }} className="absolute">
+        {/* Scene 1 */}
+        <motion.div style={{ opacity: opacity1, y: y1, pointerEvents: 'none' }} className="absolute flex flex-col items-center w-full">
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6">
-            The Internet Speaks.
+            The Creator Economy <br/> Runs on Voice.
           </h2>
-          <p className="text-xl text-white/50 mb-12 max-w-xl mx-auto">
-            Podcasts, live streams, video essays, interviews. The creator economy is driven by voice.
+          <p className="text-xl text-white/50 mb-12 max-w-2xl mx-auto">
+            Podcasts. Live streams. Video essays. The digital world is increasingly audio-first, assuming everyone can simply turn on a microphone and speak.
           </p>
-          <div className="flex gap-4 justify-center opacity-30 blur-[2px] scale-95 pointer-events-none grayscale">
-            <div className="w-32 h-40 glass rounded-xl border border-white/10" />
-            <div className="w-40 h-48 glass rounded-xl border border-white/10 -mt-8" />
-            <div className="w-32 h-40 glass rounded-xl border border-white/10" />
-          </div>
         </motion.div>
 
-        <motion.div style={{ opacity: opacity2, y: y2 }} className="absolute">
+        {/* Scene 2 */}
+        <motion.div style={{ opacity: opacity2, y: y2, pointerEvents: 'none' }} className="absolute flex flex-col items-center w-full">
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6">
-            Not Everyone Can.
+            But I watched millions <br/> get left behind.
           </h2>
           <p className="text-xl md:text-2xl text-electric-blue mb-12 max-w-2xl mx-auto font-medium">
-            Sign-first creators are often invisible in speech-first platforms.
+            Incredible sign-first creators with profound stories, forced to remain invisible on platforms that don't speak their language.
           </p>
-          <div className="w-full max-w-lg mx-auto h-64 border border-white/5 bg-gradient-to-b from-white/5 to-transparent rounded-2xl p-6 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.15)_0%,rgba(0,0,0,0)_70%)]" />
-            <div className="relative z-10 flex flex-col gap-4 h-full justify-center">
-               <div className="w-3/4 h-4 rounded bg-white/10" />
-               <div className="w-full h-4 rounded bg-white/10" />
-               <div className="w-5/6 h-4 rounded bg-white/10" />
-            </div>
-          </div>
+        </motion.div>
+
+        {/* Scene 3 */}
+        <motion.div style={{ opacity: opacity3, y: y3, pointerEvents: 'auto' }} className="absolute flex flex-col items-center w-full">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6">
+            That's why I built Souund.
+          </h2>
+          <p className="text-xl md:text-2xl text-white/60 mb-12 max-w-2xl mx-auto font-light">
+            Not just another transcription tool, but a fundamental communication layer designed to give sign-first creators their voice back.
+          </p>
         </motion.div>
 
       </div>
