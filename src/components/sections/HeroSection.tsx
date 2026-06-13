@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
@@ -9,7 +9,6 @@ import { ChevronDown } from "lucide-react";
 
 function ParticleField(props: any) {
   const ref = useRef<any>(null);
-  // Generate random points in a sphere
   const sphere = random.inSphere(new Float32Array(5000 * 3), { radius: 1.5 });
 
   useFrame((state, delta) => {
@@ -35,6 +34,34 @@ function ParticleField(props: any) {
 }
 
 export default function HeroSection() {
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleJoinWaitlist = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      
+      if (res.ok) {
+        setIsSubmitted(true);
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Network error.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
       {/* 3D Background */}
@@ -80,19 +107,43 @@ export default function HeroSection() {
           Transform sign-language videos into natural speech, subtitles, and creator-ready content using AI.
         </motion.p>
 
-        <motion.div
-          className="flex flex-col sm:flex-row items-center gap-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-        >
-          <button className="px-8 py-4 rounded-full bg-white text-black font-semibold tracking-wide hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(255,255,255,0.3)]">
-            Join Waitlist
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center max-w-lg">
+          {isSubmitted ? (
+            <motion.div 
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="px-8 py-4 rounded-full bg-green-500/20 border border-green-500/50 text-green-400 font-medium w-full text-center"
+            >
+              🎉 You're on the waitlist!
+            </motion.div>
+          ) : (
+            <form onSubmit={handleJoinWaitlist} className="relative w-full sm:w-auto flex-1">
+              <input 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email" 
+                required
+                className="w-full px-6 py-4 rounded-full bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-electric-blue transition-colors"
+                disabled={isLoading}
+              />
+              <button 
+                type="submit" 
+                disabled={isLoading}
+                className="absolute right-2 top-2 bottom-2 px-6 rounded-full bg-white text-black font-semibold hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+              >
+                {isLoading ? "..." : "Join"}
+              </button>
+            </form>
+          )}
+          
+          <button 
+            onClick={() => window.location.href = '/asl'}
+            className="px-8 py-4 rounded-full glass text-white font-medium hover:bg-white/10 transition-all border border-white/20 whitespace-nowrap"
+          >
+            How ASL Mode Works
           </button>
-          <button className="px-8 py-4 rounded-full glass text-white font-medium hover:bg-white/10 transition-all border border-white/20">
-            Watch Vision
-          </button>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll Indicator */}
