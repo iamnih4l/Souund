@@ -2,35 +2,8 @@
 
 import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Points, PointMaterial } from "@react-three/drei";
-import * as random from "maath/random/dist/maath-random.esm";
-
-function ParticleField(props: any) {
-  const ref = useRef<any>(null);
-  const sphere = random.inSphere(new Float32Array(5000 * 3), { radius: 1.5 });
-
-  useFrame((state, delta) => {
-    if (ref.current) {
-      ref.current.rotation.x -= delta / 10;
-      ref.current.rotation.y -= delta / 15;
-    }
-  });
-
-  return (
-    <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
-        <PointMaterial
-          transparent
-          color="#0ea5e9"
-          size={0.005}
-          sizeAttenuation={true}
-          depthWrite={false}
-        />
-      </Points>
-    </group>
-  );
-}
+import { Canvas } from "@react-three/fiber";
+import VoiceWaveField from "@/components/ui/VoiceWaveField";
 
 export default function StorySection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -75,11 +48,11 @@ export default function StorySection() {
       <div className="sticky top-0 h-screen w-full overflow-hidden perspective-[1200px]">
         
         {/* 3D Particle Background */}
-        <div className="absolute inset-0 z-0 opacity-40">
-          <Canvas camera={{ position: [0, 0, 1] }}>
-            <ParticleField />
-          </Canvas>
-        </div>
+        <div className="absolute inset-0 z-0 opacity-60">
+        <Canvas camera={{ position: [0, 2, 6], fov: 60 }}>
+          <VoiceWaveField />
+        </Canvas>
+      </div>
 
         {/* Atmosphere */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,rgba(0,0,0,1)_80%)] z-0 pointer-events-none" />
