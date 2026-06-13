@@ -55,7 +55,7 @@ export default function StorySection() {
       </div>
 
         {/* Atmosphere */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,rgba(0,0,0,1)_80%)] z-0 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,transparent_80%)] z-0 pointer-events-none" />
 
         {/* 3D World Space */}
         <motion.div 

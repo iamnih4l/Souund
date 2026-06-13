@@ -45,7 +45,7 @@ export default function HeroSection() {
       </div>
 
       {/* Radial Gradient for Depth */}
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.15)_0%,rgba(0,0,0,1)_70%)]" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.15)_0%,transparent_70%)]" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-5xl mx-auto">
