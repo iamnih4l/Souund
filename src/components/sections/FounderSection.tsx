@@ -23,7 +23,7 @@ export default function FounderSection() {
             <div className="flex-shrink-0 relative">
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_30px_rgba(14,165,233,0.15)] transition-shadow duration-500">
                 <img 
-                  src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?auto=format&fit=crop&w=400&q=80" 
+                  src="https://avatars.githubusercontent.com/u/141166756?v=4" 
                   alt="Mohammed Nihal"
                   className="w-full h-full object-cover filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
                 />
@@ -51,7 +51,9 @@ export default function FounderSection() {
                   <span>LinkedIn</span>
                 </a>
                 <a 
-                  href="#" 
+                  href="https://github.com/iamnih4l" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-white/70 hover:text-white transition-colors"
                 >
                   <FaGithub size={16} />
