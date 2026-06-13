@@ -6,7 +6,6 @@ import { Points, PointMaterial } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { ASLText } from "@/components/ASLInterpreter";
 
 function ParticleField(props: any) {
   const ref = useRef<any>(null);
@@ -56,7 +55,7 @@ export default function HeroSection() {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         >
           <span className="inline-block py-1 px-3 rounded-full glass border border-white/10 text-sm text-electric-blue mb-6 font-medium tracking-wide">
-            <ASLText>Creator Infrastructure for Sign-First Communication</ASLText>
+            Creator Infrastructure for Sign-First Communication
           </span>
         </motion.div>
 
@@ -66,9 +65,9 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
         >
-          <ASLText>Sign. Create.</ASLText> <br />
+          Sign. Create. <br />
           <span className="text-gradient bg-gradient-to-r from-white via-electric-blue to-soft-purple">
-            <ASLText>Be Heard.</ASLText>
+            Be Heard.
           </span>
         </motion.h1>
 
@@ -78,7 +77,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
         >
-          <ASLText>Transform sign-language videos into natural speech, subtitles, and creator-ready content using AI.</ASLText>
+          Transform sign-language videos into natural speech, subtitles, and creator-ready content using AI.
         </motion.p>
 
         <motion.div

@@ -10,8 +10,8 @@ export default function StorySection() {
     offset: ["start end", "end start"]
   });
 
-  const opacity1 = useTransform(scrollYProgress, [0.1, 0.3, 0.4], [0, 1, 1]);
-  const y1 = useTransform(scrollYProgress, [0.1, 0.3], [100, 0]);
+  const opacity1 = useTransform(scrollYProgress, [0.1, 0.3, 0.4, 0.5], [0, 1, 1, 0]);
+  const y1 = useTransform(scrollYProgress, [0.1, 0.3, 0.4, 0.5], [100, 0, 0, -100]);
 
   const opacity2 = useTransform(scrollYProgress, [0.4, 0.6, 0.7], [0, 1, 1]);
   const y2 = useTransform(scrollYProgress, [0.4, 0.6], [100, 0]);
