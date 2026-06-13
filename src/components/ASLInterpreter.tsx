@@ -24,33 +24,59 @@ export const ASLProvider = ({ children }: { children: React.ReactNode }) => {
   const [aslMode, setAslMode] = useState(false);
   const [hoveredWord, setHoveredWord] = useState<string | null>(null);
 
-  // Global mouse interaction for words if ASL mode is enabled
+  // Global mouse interaction using caret position to extract the exact word hovered
   useEffect(() => {
     if (!aslMode) return;
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      // We only read text if it's explicitly wrapped, OR we can try to guess
-      // But wrapping is safer.
-      if (target.classList.contains('asl-hoverable')) {
-        const text = target.innerText;
-        setHoveredWord(text);
-      }
-    };
+    let debounceTimer: NodeJS.Timeout;
 
-    const handleMouseOut = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.classList.contains('asl-hoverable')) {
+    const handleMouseMove = (e: MouseEvent) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        let range;
+        
+        // @ts-ignore
+        if (document.caretRangeFromPoint) {
+          // @ts-ignore
+          range = document.caretRangeFromPoint(e.clientX, e.clientY);
+        // @ts-ignore
+        } else if (document.caretPositionFromPoint) {
+          // @ts-ignore
+          const pos = document.caretPositionFromPoint(e.clientX, e.clientY);
+          if (pos) {
+            range = document.createRange();
+            range.setStart(pos.offsetNode, pos.offset);
+            range.setEnd(pos.offsetNode, pos.offset);
+          }
+        }
+
+        if (range && range.startContainer.nodeType === Node.TEXT_NODE) {
+          const text = range.startContainer.nodeValue || '';
+          const offset = range.startOffset;
+          
+          // find word boundaries
+          let start = offset;
+          while (start > 0 && /\w/.test(text[start - 1])) start--;
+          let end = offset;
+          while (end < text.length && /\w/.test(text[end])) end++;
+          
+          const word = text.slice(start, end).trim();
+          if (word.length > 0) {
+            setHoveredWord(word);
+            return;
+          }
+        }
+        
+        // If we didn't find a word, clear it
         setHoveredWord(null);
-      }
+      }, 30);
     };
 
-    document.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseout', handleMouseOut);
+    document.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      document.removeEventListener('mouseover', handleMouseOver);
-      document.removeEventListener('mouseout', handleMouseOut);
+      clearTimeout(debounceTimer);
+      document.removeEventListener('mousemove', handleMouseMove);
     };
   }, [aslMode]);
 
